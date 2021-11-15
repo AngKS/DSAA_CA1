@@ -1,0 +1,7 @@
+
+arr1 = [1, 2, 3, 4, 5]
+
+dict1 = {'a': 1, 'b': 2, 'c': 3}
+
+for i, val in enumerate(dict1):
+    print(i, val)
