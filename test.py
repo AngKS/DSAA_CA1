@@ -42,25 +42,34 @@ class Morse:
             for i, letter in enumerate(word):
                 if not letter.isalpha() and not letter.isspace() and not letter.isdigit():
                     return "Please only include alphabets and spaces in your sentence."
-                letter = letter.upper()
-                if letter in self.lookup:
+                if letter.upper() in self.lookup:
                     if i != len(word) - 1:
-                        morseCode += self.lookup[letter] + ","
+                        morseCode += self.lookup[letter.upper()] + ","
                     else:
-                        morseCode += self.lookup[letter]
+                        morseCode += self.lookup[letter.upper()]
                 else:
                     morseCode += " "
+            morseCode += " "
         return morseCode
 
-    def decode(self, sentence):
+    def decode(self, morse):
         decoded = ""
         # validate to ensure that sentence only consist of only alphabets and space
-        for letter in sentence:
-            if not letter.isalpha() and not letter.isspace():
-                return "Please only include alphabets and spaces in your sentence."
+        words = morse.split(" ")
+        for word in words:
+            letters = word.split(",")
+            for letter in letters:
+                for alpha, morse in self.lookup.items():
+                    if morse == letter:
+                        decoded += alpha
+            decoded += " "
+            # decoded += " "
 
         return decoded
 
 
 morse1 = Morse()
-print(morse1.encode("Hello World"))
+encoded = morse1.encode("SOS Our sHiP NEEds HeLP")
+print(encoded)
+
+print(morse1.decode(encoded))
