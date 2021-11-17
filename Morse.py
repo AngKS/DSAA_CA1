@@ -68,8 +68,3 @@ class Morse:
         return decoded
 
 
-morse1 = Morse()
-encoded = morse1.encode("SOS Our sHiP NEEds HeLP")
-print(encoded)
-
-print(morse1.decode(encoded))
