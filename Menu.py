@@ -12,6 +12,16 @@ class Menu:
             self.length += 1
             self.__items.append(item)
         
+    def __checkInput(self, userInput):
+        # Check user input to see if it exists in the list
+        # If it does, return the index of the item
+        if userInput.isnumeric():
+            userInput = int(userInput)
+            if userInput >= 1 and userInput <= self.length:
+                return userInput - 1
+        print("Invalid input")
+        return self.__str__()
+
     def __str__(self):
         print("\n" + self.qn)
         if self.ord:
@@ -21,11 +31,11 @@ class Menu:
             for item in self.__items:
                 print("-", item)
 
-        userInput = input(">> ")
+        userInput = self.__checkInput(input("Enter choice: "))
         return self.callback(userInput)
 
 def testFunction(userInput):
-    print("You entered: "+ userInput)
+    print("You entered: ", userInput + 1)
     return ""
 
 newMenu = Menu("What do you want to do?", True, testFunction)

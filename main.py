@@ -7,9 +7,12 @@ Admin: P2004176
 # Writing program 
 
 from Morse import Morse
+from Menu import Menu
 
-morse1 = Morse()
-encoded = morse1.encode("SOS Our sHiP NEEds HeLP")
-print(encoded)
+def main():
+    print("")
 
-print(morse1.decode(encoded))
+
+
+if __name__ == "__main__":
+    main()
