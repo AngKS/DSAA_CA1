@@ -45,6 +45,18 @@ class SortedList:
         # Beacuse newNode is largest than all the other nodes.
         leftNode.nextNode = newNode
 
+    def outputArr(self):
+        output = []
+        node = self.headNode
+        firstNode = True
+        while node != None:
+            if firstNode:
+                output.append(eval(node.__str__()))
+                firstNode = False
+            else:
+                output.append(eval(node.__str__()))
+            node = node.nextNode
+        return output
         
 
     def __str__(self):

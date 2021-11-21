@@ -67,62 +67,61 @@ class Morse:
                 data = f.readlines()
                 f.close()
         except FileNotFoundError:
-            return "Input file not found."
+            return "<Input file not found.>\n"
+
+        try:
+            with open("stopwords.txt", "r") as f:
+                stopwords = [word.upper() for word in f.read().split("\n")]
+                f.close()
+        except FileNotFoundError:
+            return "Stopwords file not found."
 
         print("\n>>>Analysis has started:")
         stats = {}
         decodedString = ""
+        
         for row,sentence in enumerate(data):
             for column, word in enumerate(sentence.split(" ")):
                 decoded = Text(self.decode(word), word, row, column)
                 if decoded.text in stats:
                     stats[decoded.text].insert(decoded)
-                    # print("Exists:",stats[decoded.text])
                 else:
                     newList = SortedList()
                     newList.insert(decoded)
                     stats[decoded.text] = newList
-                    # print(newList)
                 decodedString += decoded.text + " "
-            decodedString += "\n"  
 
-        print(decodedString)
-        # key refers to the unique words from the sentences
+            decodedString += "\n"  
         uniqueWords = [key for key in stats.keys()]
-        # lengths = {stats[key].length for key in stats.keys()}
-        # sort by frequncy
-        
+        print("*** Decoded Message", "\n", decodedString)
         sortedUniqueWords = sorted(uniqueWords, key=lambda x: (stats[x].length, len(x), x))
         lengths = sorted({ stats[key].length for key in sortedUniqueWords }, reverse=True)
-        print(sortedUniqueWords, lengths)
-        # for key in sortedUniqueWords:
-        #     if stats[key].length in lengths:
-        #         print(f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
-        #     else:
-        #         lengths.append(stats[key].length)
-        #         print(f"\n*** Morse Code with frequency => {stats[key].length}")
-        #         print(f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
+
         for length in lengths: 
             print(f"\n*** Morse Code with frequency => {length}")
             for key in sortedUniqueWords:
                 if stats[key].length == length:
                     print(f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
-                
-
-        # print(stats.keys())
-        # print(stats)
-          
-
-
-        # print("\n**Decoded Morse Message" + "\n" + decoded)
-
-        # Morse code statistics
-        # get frequency of each word
-        # words = decoded.split(" ")
-        # wordFreq = {}
-        # for word in words:
-        #     if word in wordFreq:
-        #         wordFreq[word] += 1
-        #     else:
-        #         wordFreq[word] = 1
         
+        # Essential Message Printing
+
+        # load Stopwords file
+        try:
+            with open("stopwords.txt", "r") as f:
+                stopwords = [word.upper() for word in f.read().split("\n")]
+                f.close()
+        except FileNotFoundError:
+            return "Stopwords file not found."
+
+        # remove stopwords from uniqueWords
+        noStopwords = [(word, stats[word].outputArr()) for word in sortedUniqueWords if word not in stopwords]
+        # sort nostopwords
+        print(noStopwords)
+        noStopwords = sorted(noStopwords, key=lambda x : (x[1][0], len(x[1])) )
+        
+        ESSENTIAL = ""
+        for length in lengths:
+            for word, arr in noStopwords:
+                if len(arr) == length:
+                    ESSENTIAL += f"{word} "
+        return "\n***Essential Message:\n" + ESSENTIAL

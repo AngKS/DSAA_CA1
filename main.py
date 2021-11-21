@@ -53,8 +53,17 @@ def main():
         outputFile = input("Enter the output file name: ")
         print(morse.analyze(inputFile, outputFile))
         
+    elif userInput == '4':
+        print("Exiting program...")
+        exit()
+    else:
+        print("Invalid input. Please try again.")
+        main()
+    
+    userInput = input("Press Enter to continue...")
         
 
 
 if __name__ == "__main__":
-    main()
+    while 1:
+        main()
