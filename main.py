@@ -27,6 +27,7 @@ def main():
     '''The main Program loop'''
     # program variables:
     pMode = 'h'
+    morse = Morse()
 
     print(mainBanner())
     # Main menu selection
@@ -40,9 +41,20 @@ def main():
     ])
     # print mainMenu
     userInput = mainMenu.show()
-
-    if userInput == 1:
+    
+    if userInput == '1':
         print(f"Current printing mode is: {pMode}")
+    elif userInput == '2':
+        inputMorse = input("Enter morse code you wish to decode: ")
+        result = morse.decode(inputMorse)
+        print("Decoded message:", result)
+    elif userInput == '3':
+        inputFile = input("Enter the input file name: ")
+        outputFile = input("Enter the output file name: ")
+        print(morse.analyze(inputFile, outputFile))
+        print("\n>>>Analysis has started:")
+        
+
 
 if __name__ == "__main__":
     main()

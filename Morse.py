@@ -63,8 +63,18 @@ class Morse:
                     if morse == letter:
                         decoded += alpha
             decoded += " "
-            # decoded += " "
 
         return decoded
 
-
+    def analyze(self, input, output):
+        '''Takes in 2 arguements: Input file and Output. Conducts a morse analysis on the input file and return the results into the output file'''
+        try:
+            with open(input, "r") as f:
+                data = f.readlines()
+                f.close()
+        except FileNotFoundError:
+            return "Input file not found."
+        decoded = ""
+        for d in data:
+            decoded += self.decode(d) + "\n"
+        return decoded
