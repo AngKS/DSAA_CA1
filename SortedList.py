@@ -45,6 +45,8 @@ class SortedList:
         # Beacuse newNode is largest than all the other nodes.
         leftNode.nextNode = newNode
 
+        
+
     def __str__(self):
         # We start at the head
         output = ""

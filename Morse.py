@@ -71,10 +71,10 @@ class Morse:
 
         print("\n>>>Analysis has started:")
         stats = {}
+        decodedString = ""
         for row,sentence in enumerate(data):
             for column, word in enumerate(sentence.split(" ")):
-                decoded = Text(self.decode(word), row, column)
-                print(decoded.text)
+                decoded = Text(self.decode(word), word, row, column)
                 if decoded.text in stats:
                     stats[decoded.text].insert(decoded)
                     # print("Exists:",stats[decoded.text])
@@ -83,9 +83,32 @@ class Morse:
                     newList.insert(decoded)
                     stats[decoded.text] = newList
                     # print(newList)
+                decodedString += decoded.text + " "
+            decodedString += "\n"  
+
+        print(decodedString)
+        # key refers to the unique words from the sentences
+        uniqueWords = [key for key in stats.keys()]
+        # lengths = {stats[key].length for key in stats.keys()}
+        # sort by frequncy
         
-        for key in stats.keys():
-            print(f"{key}: [{stats[key].length}] {stats[key]}")
+        sortedUniqueWords = sorted(uniqueWords, key=lambda x: (stats[x].length, len(x), x))
+        lengths = sorted({ stats[key].length for key in sortedUniqueWords }, reverse=True)
+        print(sortedUniqueWords, lengths)
+        # for key in sortedUniqueWords:
+        #     if stats[key].length in lengths:
+        #         print(f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
+        #     else:
+        #         lengths.append(stats[key].length)
+        #         print(f"\n*** Morse Code with frequency => {stats[key].length}")
+        #         print(f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
+        for length in lengths: 
+            print(f"\n*** Morse Code with frequency => {length}")
+            for key in sortedUniqueWords:
+                if stats[key].length == length:
+                    print(f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
+                
+
         # print(stats.keys())
         # print(stats)
           
@@ -103,6 +126,3 @@ class Morse:
         #     else:
         #         wordFreq[word] = 1
         
-        
-
-        return decoded
