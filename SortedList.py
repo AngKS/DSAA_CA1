@@ -52,9 +52,9 @@ class SortedList:
         firstNode = True
         while node != None:
             if firstNode:
-                output = f"'{node.__str__()}'"
+                output = f"{node.__str__()}"
                 firstNode = False
             else:
-                output += (', ' + f"'{node.__str__()}'")
+                output += (', ' + f"{node.__str__()}")
             node = node.nextNode
-        return output
+        return f"[{output}]"

@@ -52,7 +52,7 @@ def main():
         inputFile = input("Enter the input file name: ")
         outputFile = input("Enter the output file name: ")
         print(morse.analyze(inputFile, outputFile))
-        print("\n>>>Analysis has started:")
+        
         
 
 
