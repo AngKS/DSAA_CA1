@@ -45,14 +45,14 @@ def main():
     if userInput == '1':
         print(f"Current printing mode is: {pMode}")
     elif userInput == '2':
-        inputMorse = input("Enter morse code you wish to decode: ")
-        result = morse.decode(inputMorse)
-        print("Decoded message:", result)
+        inputMorse = input("Enter Message you wish to encode: ")
+        result = morse.encode(inputMorse)
+        print("Encoded message:", result)
     elif userInput == '3':
         inputFile = input("Enter the input file name: ")
         outputFile = input("Enter the output file name: ")
         print(morse.analyze(inputFile, outputFile))
-        
+
     elif userInput == '4':
         print("Exiting program...")
         exit()

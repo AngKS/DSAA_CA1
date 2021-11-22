@@ -4,6 +4,7 @@ class Text(Node):
     def __init__(self, text, morse, x, y):
         self.text = text
         self.morse = morse
+        self.morseLength = len(morse)
         self.x = x
         self.y = y
         super().__init__()

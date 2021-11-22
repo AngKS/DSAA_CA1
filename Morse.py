@@ -29,6 +29,21 @@ class Morse:
     def __init__(self):
         self.lookup = self.__class__.table
 
+    def displayOutput(self, output, method='H'):
+        output = output.split(" ")
+        outputLength = [(len(self.encode(word)),self.encode(word), pos) for pos, word in enumerate(output)]
+        print(outputLength)
+        def maxNum(l):
+            if len(l) == 1:
+                return l[0]
+            else:
+                if l[1] > l[0]:
+                    return maxNum(l[1:])
+                else:
+                    return maxNum( [l[0]] + l[2:] )
+                
+        print(maxNum([i[0] for i in outputLength]))
+
     def encode(self, sentence):
         '''Takes in 1 argument(sentence) and return the encoded sentence in Morse'''
         morseCode = ""
@@ -79,8 +94,8 @@ class Morse:
         print("\n>>>Analysis has started:")
         stats = {}
         decodedString = ""
-        
-        for row,sentence in enumerate(data):
+
+        for row, sentence in enumerate(data):
             for column, word in enumerate(sentence.split(" ")):
                 decoded = Text(self.decode(word), word, row, column)
                 if decoded.text in stats:
@@ -91,18 +106,21 @@ class Morse:
                     stats[decoded.text] = newList
                 decodedString += decoded.text + " "
 
-            decodedString += "\n"  
+            decodedString += "\n"
         uniqueWords = [key for key in stats.keys()]
         print("*** Decoded Message", "\n", decodedString)
-        sortedUniqueWords = sorted(uniqueWords, key=lambda x: (stats[x].length, len(x), x))
-        lengths = sorted({ stats[key].length for key in sortedUniqueWords }, reverse=True)
+        sortedUniqueWords = sorted(
+            uniqueWords, key=lambda x: (stats[x].length, len(x), x))
+        lengths = sorted(
+            {stats[key].length for key in sortedUniqueWords}, reverse=True)
 
-        for length in lengths: 
+        for length in lengths:
             print(f"\n*** Morse Code with frequency => {length}")
             for key in sortedUniqueWords:
                 if stats[key].length == length:
-                    print(f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
-        
+                    print(
+                        f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
+
         # Essential Message Printing
 
         # load Stopwords file
@@ -114,14 +132,19 @@ class Morse:
             return "Stopwords file not found."
 
         # remove stopwords from uniqueWords
-        noStopwords = [(word, stats[word].outputArr()) for word in sortedUniqueWords if word not in stopwords]
+        noStopwords = [(word, stats[word].outputArr())
+                       for word in sortedUniqueWords if word not in stopwords]
         # sort nostopwords
-        print(noStopwords)
-        noStopwords = sorted(noStopwords, key=lambda x : (x[1][0], len(x[1])) )
-        
+
+        noStopwords = sorted(noStopwords, key=lambda x: (x[1][0], len(x[1])))
+
         ESSENTIAL = ""
         for length in lengths:
             for word, arr in noStopwords:
                 if len(arr) == length:
                     ESSENTIAL += f"{word} "
         return "\n***Essential Message:\n" + ESSENTIAL
+
+
+morse1 = Morse()
+morse1.displayOutput("hello world how are you")
