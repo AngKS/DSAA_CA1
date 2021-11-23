@@ -1,6 +1,10 @@
 
 
 class EncodedWord:
+    '''
+    sentence: array
+    morse: array
+    '''
     def __init__(self, word, morse):
         self.word = word
         self.morse = morse
@@ -27,14 +31,19 @@ class EncodedWord:
                 padded.append(char)
         return padded
     
-    def __str__(self, mode='H'):
+    def show(self, mode='H'):
         print()
+        row = []
         if mode == 'V':
             for i in range(self.maxChar()):
+                vertArr = []
                 for letter in self.padding():
-                    print(letter[i], end="")
-                print()
-            return
+                    row.append(letter[i])
+                print("".join(row))
+                vertArr.append(row)
+
+            print(vertArr)
+            return vertArr
         else:
             return f"{self.morse}"
 

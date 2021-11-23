@@ -35,7 +35,7 @@ def main():
     # add options into mainMenu
     mainMenu.insert([
         "Change Printing Mode",
-        "Convert Morse Code to Text",
+        "Convert Text to Morse Code",
         "Analyze Morse Code Message",
         "Exit"
     ])
@@ -46,7 +46,7 @@ def main():
         print(f"Current printing mode is: {pMode}")
     elif userInput == '2':
         inputMorse = input("Enter Message you wish to encode: ")
-        result, msg = morse.encode(inputMorse)
+        morse.encode(inputMorse)
         # print("Encoded message:", msg)
     elif userInput == '3':
         inputFile = input("Enter the input file name: ")

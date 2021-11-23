@@ -1,5 +1,7 @@
 from newClass import Text
 from anotherClass import EncodedWord
+from itertools import zip_longest
+import numpy as np
 from SortedList import SortedList
 '''
 Name: Ang Kah Shin
@@ -50,10 +52,9 @@ class Morse:
     def encode(self, sentence):
         '''Takes in 1 argument(sentence) and return the encoded sentence in Morse'''
 
-        ENCODED = []
+        morseCode = []
         # validate to ensure that sentence only consist of only alphabets and space
         words = sentence.split(" ")
-        print(words)
         for word in words:
             encoded = ""
             for i, letter in enumerate(word):
@@ -64,15 +65,21 @@ class Morse:
                         encoded += self.lookup[letter.upper()] + ","
                     else:
                         encoded += self.lookup[letter.upper()]
-                else:
-                    encoded += " "
-            obj = EncodedWord(word, encoded)
-            # morseCode.append(obj)
-            print(obj.word, end=" ")
-            
-            ENCODED.append(obj)
-        print(" ".join(Eword.__str__(mode='V') for Eword in ENCODED), end=" ")
-        return ENCODED
+            morse = EncodedWord(word, encoded)
+            morseCode.append(morse)
+
+        print(sentence)
+        arr = []
+        for obj in morseCode:
+            arr.extend(obj.char)
+            arr.append(" ")
+
+        maxLength = len(max(arr, key=len))
+        arr = ','.join([ (" " * (maxLength - len(x))) + x for x in arr])
+
+        for char in zip_longest(*arr.split(','), fillvalue=''):
+            print(''.join(char))        
+        return 
 
     def decode(self, morse):
         decoded = ""
@@ -157,6 +164,6 @@ class Morse:
         return "\n***Essential Message:\n" + ESSENTIAL
 
 
-morse1 = Morse()
-print(morse1.encode("Help I need help real quick"))
-# morse1.displayOutput("....,.,.-..,.--. .. -.,.,.,-.. ....,.,.-..,.--. .-.,.,.- --.-,..-,..,-.-.,-.-")
+# morse1 = Morse()
+# morse1.encode("Help I need help real quick0")
+# # morse1.displayOutput("....,.,.-..,.--. .. -.,.,.,-.. ....,.,.-..,.--. .-.,.,.- --.-,..-,..,-.-.,-.-")
