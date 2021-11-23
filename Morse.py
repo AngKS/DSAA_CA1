@@ -1,4 +1,5 @@
 from newClass import Text
+from anotherClass import EncodedWord
 from SortedList import SortedList
 '''
 Name: Ang Kah Shin
@@ -29,10 +30,11 @@ class Morse:
     def __init__(self):
         self.lookup = self.__class__.table
 
-    def displayOutput(self, output, method='H'):
+    def displayOutput(self, output, method='H'): 
         output = output.split(" ")
-        outputLength = [(len(self.encode(word)),self.encode(word), pos) for pos, word in enumerate(output)]
-        print(outputLength)
+        encoded = [word.split(',') for word in output]
+        countEncoded = [(x.count('.') + x.count('-')) for i, x in enumerate(encoded)]
+        print(encoded)
         def maxNum(l):
             if len(l) == 1:
                 return l[0]
@@ -41,27 +43,36 @@ class Morse:
                     return maxNum(l[1:])
                 else:
                     return maxNum( [l[0]] + l[2:] )
-                
-        print(maxNum([i[0] for i in outputLength]))
+
+        print("Third:", maxNum(countEncoded))
+
 
     def encode(self, sentence):
         '''Takes in 1 argument(sentence) and return the encoded sentence in Morse'''
-        morseCode = ""
+
+        ENCODED = []
         # validate to ensure that sentence only consist of only alphabets and space
         words = sentence.split(" ")
+        print(words)
         for word in words:
+            encoded = ""
             for i, letter in enumerate(word):
                 if not letter.isalpha() and not letter.isspace() and not letter.isdigit():
                     return "Please only include alphabets and spaces in your sentence."
                 if letter.upper() in self.lookup:
                     if i != len(word) - 1:
-                        morseCode += self.lookup[letter.upper()] + ","
+                        encoded += self.lookup[letter.upper()] + ","
                     else:
-                        morseCode += self.lookup[letter.upper()]
+                        encoded += self.lookup[letter.upper()]
                 else:
-                    morseCode += " "
-            morseCode += " "
-        return morseCode
+                    encoded += " "
+            obj = EncodedWord(word, encoded)
+            # morseCode.append(obj)
+            print(obj.word, end=" ")
+            
+            ENCODED.append(obj)
+        print(" ".join(Eword.__str__(mode='V') for Eword in ENCODED), end=" ")
+        return ENCODED
 
     def decode(self, morse):
         decoded = ""
@@ -147,4 +158,5 @@ class Morse:
 
 
 morse1 = Morse()
-morse1.displayOutput("hello world how are you")
+print(morse1.encode("Help I need help real quick"))
+# morse1.displayOutput("....,.,.-..,.--. .. -.,.,.,-.. ....,.,.-..,.--. .-.,.,.- --.-,..-,..,-.-.,-.-")

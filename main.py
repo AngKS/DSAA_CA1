@@ -46,8 +46,8 @@ def main():
         print(f"Current printing mode is: {pMode}")
     elif userInput == '2':
         inputMorse = input("Enter Message you wish to encode: ")
-        result = morse.encode(inputMorse)
-        print("Encoded message:", result)
+        result, msg = morse.encode(inputMorse)
+        # print("Encoded message:", msg)
     elif userInput == '3':
         inputFile = input("Enter the input file name: ")
         outputFile = input("Enter the output file name: ")
