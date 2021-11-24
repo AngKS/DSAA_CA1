@@ -10,11 +10,12 @@ class Menu:
     2. __str__(): Prints the menu
     '''
 
-    def __init__(self, question, order):
+    def __init__(self, question, order, options= None):
         self.qn = question
         self.ord = order
         self.__items = []
         self.length = 0
+        self.options = options
 
     def insert(self, items):
         for item in items:
@@ -24,11 +25,17 @@ class Menu:
     def __checkInput(self, userInput):
         # Check user input to see if it exists in the list
         # If it does, return the index of the item
-        if userInput.isnumeric():
-            userInput = int(userInput)
-            if userInput >= 1 and userInput <= self.length:
-                return str(userInput)
-        print("** <Invalid input> **")
+        if self.options == None:
+            if userInput.isnumeric():
+                userInput = int(userInput)
+                if userInput >= 1 and userInput <= self.length:
+                    return str(userInput)
+            print("** <Invalid input> **")
+            return self.show()
+        else:
+            if userInput.upper() in self.options:
+                return userInput.upper()
+            print("** <Invalid input> **")
         return self.show()
 
     def __str__(self):

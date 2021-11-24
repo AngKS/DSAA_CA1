@@ -31,21 +31,8 @@ class EncodedWord:
                 padded.append(char)
         return padded
     
-    def show(self, mode='H'):
-        print()
-        row = []
-        if mode == 'V':
-            for i in range(self.maxChar()):
-                vertArr = []
-                for letter in self.padding():
-                    row.append(letter[i])
-                print("".join(row))
-                vertArr.append(row)
-
-            print(vertArr)
-            return vertArr
-        else:
-            return f"{self.morse}"
+    def __str__(self):
+        return f"{self.morse}"
 
 # m1 = EncodedWord("hello", "....,.,.-..,.-..,---")
 # print(m1.maxChar())

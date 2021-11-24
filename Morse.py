@@ -49,7 +49,7 @@ class Morse:
         print("Third:", maxNum(countEncoded))
 
 
-    def encode(self, sentence):
+    def encode(self, sentence, mode='H'):
         '''Takes in 1 argument(sentence) and return the encoded sentence in Morse'''
 
         morseCode = []
@@ -69,17 +69,23 @@ class Morse:
             morseCode.append(morse)
 
         print(sentence)
-        arr = []
+        if mode == 'V':
+            arr = []
+            for obj in morseCode:
+                arr.extend(obj.char)
+                arr.append(" ")
+
+            maxLength = len(max(arr, key=len))
+            arr = ','.join([ (" " * (maxLength - len(x))) + x for x in arr])
+
+            for char in zip_longest(*arr.split(','), fillvalue=''):
+                print(''.join(char))        
+            return 
+        
         for obj in morseCode:
-            arr.extend(obj.char)
-            arr.append(" ")
-
-        maxLength = len(max(arr, key=len))
-        arr = ','.join([ (" " * (maxLength - len(x))) + x for x in arr])
-
-        for char in zip_longest(*arr.split(','), fillvalue=''):
-            print(''.join(char))        
-        return 
+            print(obj, end=" ")
+        
+        return
 
     def decode(self, morse):
         decoded = ""
