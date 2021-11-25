@@ -68,8 +68,9 @@ class Morse:
             morse = EncodedWord(word, encoded)
             morseCode.append(morse)
 
-        print(sentence)
+        
         if mode == 'V':
+            print(sentence)
             arr = []
             for obj in morseCode:
                 arr.extend(obj.char)
@@ -80,12 +81,9 @@ class Morse:
 
             for char in zip_longest(*arr.split(','), fillvalue=''):
                 print(''.join(char))        
-            return 
+            return ''
         
-        for obj in morseCode:
-            print(obj, end=" ")
-        
-        return
+        return ' '.join(obj.morse for obj in morseCode)
 
     def decode(self, morse):
         decoded = ""
@@ -100,6 +98,7 @@ class Morse:
         return decoded
 
     def analyze(self, input, output):
+        report = ""
         '''Takes in 2 arguements: Input file and Output. Conducts a morse analysis on the input file and return the results into the output file'''
         try:
             with open(input, "r") as f:
@@ -129,21 +128,22 @@ class Morse:
                     newList.insert(decoded)
                     stats[decoded.text] = newList
                 decodedString += decoded.text + " "
-
             decodedString += "\n"
         uniqueWords = [key for key in stats.keys()]
-        print("*** Decoded Message", "\n", decodedString)
-        sortedUniqueWords = sorted(
-            uniqueWords, key=lambda x: (stats[x].length, len(x), x))
-        lengths = sorted(
-            {stats[key].length for key in sortedUniqueWords}, reverse=True)
+        # print("*** Decoded Message", "\n", decodedString)
+        # Add decoded string into report
+        report += ("*** Decoded Message\n" + decodedString)
+
+        sortedUniqueWords = sorted(uniqueWords, key=lambda x: (stats[x].length, len(x), x))
+        lengths = sorted({stats[key].length for key in sortedUniqueWords}, reverse=True)
 
         for length in lengths:
-            print(f"\n*** Morse Code with frequency => {length}")
+            report += f"\n*** Morse Code with frequency => {length}\n"
             for key in sortedUniqueWords:
                 if stats[key].length == length:
-                    print(
-                        f"{self.encode(key)}\n[{key}]: [{stats[key].length}] {stats[key]}")
+                    # print(self.encode(key, 'H'))
+                    # print(f"[{key}]: ({stats[key].length}) {stats[key]}")
+                    report += f"{self.encode(key, 'H')}\n[{key}]: ({stats[key].length}) {stats[key]}\n"
 
         # Essential Message Printing
 
@@ -156,10 +156,9 @@ class Morse:
             return "Stopwords file not found."
 
         # remove stopwords from uniqueWords
-        noStopwords = [(word, stats[word].outputArr())
-                       for word in sortedUniqueWords if word not in stopwords]
-        # sort nostopwords
+        noStopwords = [(word, stats[word].outputArr()) for word in sortedUniqueWords if word not in stopwords]
 
+        # sort nostopwords
         noStopwords = sorted(noStopwords, key=lambda x: (x[1][0], len(x[1])))
 
         ESSENTIAL = ""
@@ -167,9 +166,13 @@ class Morse:
             for word, arr in noStopwords:
                 if len(arr) == length:
                     ESSENTIAL += f"{word} "
-        return "\n***Essential Message:\n" + ESSENTIAL
+        report += f"\n*** Essential Message:\n{ESSENTIAL}\n"
+        print(report)
 
-
-# morse1 = Morse()
-# morse1.encode("Help I need help real quick0")
-# # morse1.displayOutput("....,.,.-..,.--. .. -.,.,.,-.. ....,.,.-..,.--. .-.,.,.- --.-,..-,..,-.-.,-.-")
+        # write report to output file
+        try:
+            with open(output, "w") as f:
+                f.write(report)
+                f.close()
+        except FileNotFoundError:
+            return "Output file not found."
