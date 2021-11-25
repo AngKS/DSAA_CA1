@@ -1,9 +1,9 @@
 
-class Node:
-    def __init__(self):
-        self.nextNode = None
-
-
+'''
+Name: Ang Kah Shin
+Class: DAAA/FT/2B/04
+Admin: P2004176
+'''
 # SortedList class
 class SortedList:
     def __init__(self):

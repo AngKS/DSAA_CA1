@@ -1,5 +1,5 @@
-from newClass import Text
-from anotherClass import EncodedWord
+from Text import Text
+from EncodedWord import EncodedWord
 from itertools import zip_longest
 import numpy as np
 from SortedList import SortedList
@@ -30,7 +30,7 @@ class Morse:
     }
 
     def __init__(self):
-        self.lookup = self.__class__.table
+        self.__lookup = self.__class__.table
 
     def displayOutput(self, output, method='H'): 
         output = output.split(" ")
@@ -60,11 +60,11 @@ class Morse:
             for i, letter in enumerate(word):
                 if not letter.isalpha() and not letter.isspace() and not letter.isdigit():
                     return "Please only include alphabets and spaces in your sentence."
-                if letter.upper() in self.lookup:
+                if letter.upper() in self.__lookup:
                     if i != len(word) - 1:
-                        encoded += self.lookup[letter.upper()] + ","
+                        encoded += self.__lookup[letter.upper()] + ","
                     else:
-                        encoded += self.lookup[letter.upper()]
+                        encoded += self.__lookup[letter.upper()]
             morse = EncodedWord(word, encoded)
             morseCode.append(morse)
 
@@ -91,15 +91,16 @@ class Morse:
 
         letters = morse.split(",")
         for letter in letters:
-            for alpha, morse in self.lookup.items():
+            for alpha, morse in self.__lookup.items():
                 if morse == letter:
                     decoded += alpha
 
         return decoded
 
-    def analyze(self, input, output):
-        report = ""
+    def analyze(self, input, output='report.txt'):
         '''Takes in 2 arguements: Input file and Output. Conducts a morse analysis on the input file and return the results into the output file'''
+
+        report = ""
         try:
             with open(input, "r") as f:
                 data = f.readlines()
@@ -130,7 +131,7 @@ class Morse:
                 decodedString += decoded.text + " "
             decodedString += "\n"
         uniqueWords = [key for key in stats.keys()]
-        # print("*** Decoded Message", "\n", decodedString)
+
         # Add decoded string into report
         report += ("*** Decoded Message\n" + decodedString)
 
@@ -141,12 +142,10 @@ class Morse:
             report += f"\n*** Morse Code with frequency => {length}\n"
             for key in sortedUniqueWords:
                 if stats[key].length == length:
-                    # print(self.encode(key, 'H'))
-                    # print(f"[{key}]: ({stats[key].length}) {stats[key]}")
+
                     report += f"{self.encode(key, 'H')}\n[{key}]: ({stats[key].length}) {stats[key]}\n"
 
         # Essential Message Printing
-
         # load Stopwords file
         try:
             with open("stopwords.txt", "r") as f:

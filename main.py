@@ -52,7 +52,7 @@ def main():
             pMode = userInput 
         elif userInput == '2':
             inputMorse = input("Enter Message you wish to encode: ")
-            morse.encode(inputMorse, mode=pMode)
+            print(morse.encode(inputMorse, mode=pMode))
             # print("Encoded message:", msg)
         elif userInput == '3':
             inputFile = input("Enter the input file name: ")

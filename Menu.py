@@ -1,4 +1,11 @@
 
+'''
+Name: Ang Kah Shin
+Class: DAAA/FT/2B/04
+Admin: P2004176
+'''
+
+
 class Menu:
     '''Menu class takes in 3 parameters:
     1. question: The question to be asked to the user
@@ -10,7 +17,7 @@ class Menu:
     2. __str__(): Prints the menu
     '''
 
-    def __init__(self, question, order, options= None):
+    def __init__(self, question, order, options=None):
         self.qn = question
         self.ord = order
         self.__items = []

@@ -1,5 +1,12 @@
 from Node import Node
 
+'''
+Name: Ang Kah Shin
+Class: DAAA/FT/2B/04
+Admin: P2004176
+'''
+
+
 class Text(Node):
     def __init__(self, text, morse, x, y):
         self.text = text
@@ -28,4 +35,3 @@ class Text(Node):
 
     def __str__(self):
         return f"{(self.x, self.y)}"
-

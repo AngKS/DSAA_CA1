@@ -1,4 +1,8 @@
-
+'''
+Name: Ang Kah Shin
+Class: DAAA/FT/2B/04
+Admin: P2004176
+'''
 
 class EncodedWord:
     '''
@@ -18,9 +22,6 @@ class EncodedWord:
                 maxNum = len(char)
         return maxNum
 
-    def hPrint(self):
-        print(f"{self.word} {self.morse}")
-        
     def padding(self):
         padded = []
         maxLen = self.maxChar()
@@ -33,9 +34,3 @@ class EncodedWord:
     
     def __str__(self):
         return f"{self.morse}"
-
-# m1 = EncodedWord("hello", "....,.,.-..,.-..,---")
-# print(m1.maxChar())
-# # print(m1.padding())
-# print(m1.word)
-# print(m1.__str__('V'))
