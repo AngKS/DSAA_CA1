@@ -6,8 +6,8 @@ Admin: P2004176
 '''
 # Writing program
 
-from Morse import Morse
-from Menu import Menu
+from Morse.Morse import Morse
+from Menu.Menu import Menu
 
 
 def mainBanner():

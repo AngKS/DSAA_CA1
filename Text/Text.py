@@ -1,4 +1,4 @@
-from Node import Node
+from SortedList.Node import Node
 
 '''
 Name: Ang Kah Shin

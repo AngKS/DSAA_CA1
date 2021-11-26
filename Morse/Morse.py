@@ -1,8 +1,8 @@
-from Text import Text
-from EncodedWord import EncodedWord
+from Text.Text import Text
+from EncodedWord.EncodedWord import EncodedWord
 from itertools import zip_longest
 import numpy as np
-from SortedList import SortedList
+from SortedList.SortedList import SortedList
 '''
 Name: Ang Kah Shin
 Class: DAAA/FT/2B/04
