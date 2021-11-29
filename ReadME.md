@@ -1,4 +1,4 @@
-# Project Title
+# Morse Code Analyzer
 ST1507 Data Structures & Algorithms(AI) CA1 Assignment
 
 This is my CA1 assignment to implement a Morse code encoder/decoder and analyser.
